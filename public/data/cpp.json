@@ -60,5 +60,37 @@
         "author": "saminjay"
       }
     ]
+  },{
+    "categoryName": "Maths",
+    "snippets": [
+      {
+        "title": "Factorial",
+        "description": "Calculates the factorial of a number.",
+        "code": [
+          "int factorial(int n) {",
+          "    if (n == 0) {",
+          "        return 1;",
+          "    }",
+          "    return n * factorial(n - 1);",
+          "}"
+        ],
+        "tags": ["cpp", "math", "factorial", "utility"],
+        "author": "dibyam-jalan27"
+      },
+      {
+        "title": "Fibonacci",
+        "description": "Calculates the nth Fibonacci number.",
+        "code": [
+          "int fibonacci(int n) {",
+          "    if (n <= 1) {",
+          "        return n;",
+          "    }",
+          "    return fibonacci(n - 1) + fibonacci(n - 2);",
+          "}"
+        ],
+        "tags": ["cpp", "math", "fibonacci", "utility"],
+        "author": "dibyam-jalan27"
+      }
+    ]
   }
 ]
