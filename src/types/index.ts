@@ -23,4 +23,6 @@ export type AppState = {
   setCategory: React.Dispatch<React.SetStateAction<string>>;
   snippet: SnippetType | null;
   setSnippet: React.Dispatch<React.SetStateAction<SnippetType | null>>;
+  searchText: string;
+  setSearchText: React.Dispatch<React.SetStateAction<string>>;
 };

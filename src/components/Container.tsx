@@ -1,11 +1,15 @@
-import SnippetList from "@components/SnippetList";
+import { FC } from "react";
+import { Outlet } from "react-router-dom";
+
 import { useAppContext } from "@contexts/AppContext";
 import Banner from "@layouts/Banner";
 import Footer from "@layouts/Footer";
 import Header from "@layouts/Header";
 import Sidebar from "@layouts/Sidebar";
 
-const App = () => {
+interface ContainerProps {}
+
+const Container: FC<ContainerProps> = () => {
   const { category } = useAppContext();
 
   return (
@@ -18,7 +22,7 @@ const App = () => {
           <h2 className="section-title">
             {category ? category : "Select a category"}
           </h2>
-          <SnippetList />
+          <Outlet />
         </section>
       </main>
       <Footer />
@@ -26,4 +30,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default Container;

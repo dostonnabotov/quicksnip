@@ -76,6 +76,7 @@
   --fw-normal: 400;
 
   /* Border radius */
+  --br-sm: 0.25rem;
   --br-md: 0.5rem;
   --br-lg: 0.75rem;
 }
@@ -301,10 +302,36 @@ abbr {
   border: 1px solid var(--clr-border-primary);
   border-radius: var(--br-md);
   padding: 0.75em 1.125em;
+  position: relative;
 
   &:is(:hover, :focus-within) {
     border-color: var(--clr-accent);
   }
+}
+
+.search-field label {
+  position: absolute;
+  margin-left: 2.25em;
+}
+
+.search-field:hover, .search-field:hover * {
+  cursor: pointer;
+}
+
+/* hide the label when the search field input element is focused */
+.search-field input:focus + label {
+  display: none;
+}
+
+.search-field label kbd {
+  background-color: var(--clr-bg-secondary);
+  border: 1px solid var(--clr-border-primary);
+  border-radius: var(--br-sm);
+  padding: 0.25em 0.5em;
+  margin: 0 0.25em;
+  font-family: var(--ff-mono);
+  font-weight: var(--fw-bold);
+  color: var(--clr-text-primary);
 }
 
 .search-field > input {

@@ -4,7 +4,7 @@ import ReactDOM from "react-dom";
 
 import { useEscapeKey } from "@hooks/useEscapeKey";
 import { SnippetType } from "@types";
-import { slugify } from "@utils/slugify";
+import { slugify } from "@utils/helpers/slugify";
 
 import Button from "./Button";
 import CodePreview from "./CodePreview";

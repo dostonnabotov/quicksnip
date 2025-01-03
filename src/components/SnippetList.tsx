@@ -11,14 +11,8 @@ import SnippetModal from "./SnippetModal";
 const SnippetList = () => {
   const { language, snippet, setSnippet } = useAppContext();
   const { fetchedSnippets } = useSnippets();
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  if (!fetchedSnippets)
-    return (
-      <div>
-        <LeftAngleArrowIcon />
-      </div>
-    );
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const handleOpenModal = (activeSnippet: SnippetType) => {
     setIsModalOpen(true);
@@ -29,6 +23,14 @@ const SnippetList = () => {
     setIsModalOpen(false);
     setSnippet(null);
   };
+
+  if (!fetchedSnippets) {
+    return (
+      <div>
+        <LeftAngleArrowIcon />
+      </div>
+    );
+  }
 
   return (
     <>

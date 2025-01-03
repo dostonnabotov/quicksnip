@@ -1,15 +1,32 @@
-import { useEffect } from "react";
+import { FC } from "react";
 
 import { useAppContext } from "@contexts/AppContext";
 import { useCategories } from "@hooks/useCategories";
+import { defaultCategory } from "@utils/consts";
+
+interface CategoryListItemProps {
+  name: string;
+}
+
+const CategoryListItem: FC<CategoryListItemProps> = ({ name }) => {
+  const { category, setCategory } = useAppContext();
+
+  return (
+    <li className="category">
+      <button
+        className={`category__btn ${
+          name === category ? "category__btn--active" : ""
+        }`}
+        onClick={() => setCategory(name)}
+      >
+        {name}
+      </button>
+    </li>
+  );
+};
 
 const CategoryList = () => {
-  const { category, setCategory } = useAppContext();
   const { fetchedCategories, loading, error } = useCategories();
-
-  useEffect(() => {
-    setCategory(fetchedCategories[0]);
-  }, [setCategory, fetchedCategories]);
 
   if (loading) return <div>Loading...</div>;
 
@@ -17,17 +34,9 @@ const CategoryList = () => {
 
   return (
     <ul role="list" className="categories">
+      <CategoryListItem name={defaultCategory} />
       {fetchedCategories.map((name, idx) => (
-        <li key={idx} className="category">
-          <button
-            className={`category__btn ${
-              name === category ? "category__btn--active" : ""
-            }`}
-            onClick={() => setCategory(name)}
-          >
-            {name}
-          </button>
-        </li>
+        <CategoryListItem key={idx} name={name} />
       ))}
     </ul>
   );

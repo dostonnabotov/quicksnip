@@ -1,21 +1,18 @@
 import { createContext, FC, useContext, useState } from "react";
 
 import { AppState, LanguageType, SnippetType } from "@types";
-
-// tokens
-const defaultLanguage: LanguageType = {
-  lang: "JAVASCRIPT",
-  icon: "/icons/javascript.svg",
-};
+import { defaultCategory, defaultLanguage } from "@utils/consts";
 
 // TODO: add custom loading and error handling
 const defaultState: AppState = {
   language: defaultLanguage,
   setLanguage: () => {},
-  category: "",
+  category: defaultCategory,
   setCategory: () => {},
   snippet: null,
   setSnippet: () => {},
+  searchText: "",
+  setSearchText: () => {},
 };
 
 const AppContext = createContext<AppState>(defaultState);
@@ -24,8 +21,9 @@ export const AppProvider: FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [language, setLanguage] = useState<LanguageType>(defaultLanguage);
-  const [category, setCategory] = useState<string>("");
+  const [category, setCategory] = useState<string>(defaultCategory);
   const [snippet, setSnippet] = useState<SnippetType | null>(null);
+  const [searchText, setSearchText] = useState<string>("");
 
   return (
     <AppContext.Provider
@@ -36,6 +34,8 @@ export const AppProvider: FC<{ children: React.ReactNode }> = ({
         setCategory,
         snippet,
         setSnippet,
+        searchText,
+        setSearchText,
       }}
     >
       {children}
