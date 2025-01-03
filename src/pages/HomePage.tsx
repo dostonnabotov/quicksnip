@@ -1,5 +1,5 @@
-import { useAppContext } from "../contexts/AppContext";
 import SnippetList from "../components/SnippetList";
+import { useAppContext } from "../contexts/AppContext";
 import Sidebar from "../layouts/Sidebar";
 
 const HomePage = () => {

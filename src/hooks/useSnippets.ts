@@ -1,7 +1,8 @@
-import slugify from "../utils/slugify";
+import { useAppContext } from "@contexts/AppContext";
+import { SnippetType } from "@types";
+import { slugify } from "@utils/slugify";
+
 import { useFetch } from "./useFetch";
-import { useAppContext } from "../contexts/AppContext";
-import { SnippetType } from "../types";
 
 type CategoryData = {
   categoryName: string;
@@ -26,8 +27,9 @@ const getSnippetsFromData = (
 
 export const useSnippets = () => {
   const { language, category } = useAppContext();
-  const endpoint = `/data/${slugify(language.lang)}.json`;
-  const { data, loading, error } = useFetch<CategoryData[]>(endpoint);
+  const { data, loading, error } = useFetch<CategoryData[]>(
+    `/consolidated/${slugify(language.lang)}.json`
+  );
 
   const fetchedSnippets = getSnippetsFromData(data, category);
 

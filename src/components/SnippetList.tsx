@@ -1,7 +1,9 @@
+import { motion, AnimatePresence } from "framer-motion";
 import { useState, useMemo } from "react";
-import { SnippetType } from "../types";
-import { useAppContext } from "../contexts/AppContext";
-import { useSnippets } from "../hooks/useSnippets";
+
+import { useAppContext } from "@contexts/AppContext";
+import { useSnippets } from "@hooks/useSnippets";
+import { SnippetType } from "@types";
 
 import SnippetModal from "./SnippetModal";
 
@@ -19,7 +21,7 @@ const SnippetList = ({ query }: { query?: string | null }) => {
 
   if (loading) return <div>Loading...</div>;
   if (!filteredSnippets || filteredSnippets.length === 0)
-    return <div>No results found for "{query}"</div>;
+    return <div>No results found for &quot;{query}&quot;</div>;
 
   const handleOpenModal = (activeSnippet: SnippetType) => {
     setIsModalOpen(true);
@@ -33,31 +35,55 @@ const SnippetList = ({ query }: { query?: string | null }) => {
 
   return (
     <>
-      <ul role="list" className="snippets">
-        {filteredSnippets.map((snippet, idx) => (
-          <li key={idx}>
-            <button
-              className="snippet | flow"
-              data-flow-space="sm"
-              onClick={() => handleOpenModal(snippet)}
+      <motion.ul role="list" className="snippets">
+        <AnimatePresence mode="popLayout">
+          {fetchedSnippets.map((snippet, idx) => (
+            <motion.li
+              key={idx}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{
+                opacity: 1,
+                y: 0,
+                transition: {
+                  delay: idx * 0.05,
+                  duration: 0.2,
+                },
+              }}
+              exit={{
+                opacity: 0,
+                y: -20,
+                transition: {
+                  delay: (fetchedSnippets.length - 1 - idx) * 0.01,
+                  duration: 0.09,
+                },
+              }}
             >
-              <div className="snippet__preview">
-                <img src={language.icon} alt={language.lang} />
-              </div>
-              <h3 className="snippet__title">{snippet.title}</h3>
-              <p className="snippet__description">{snippet.description}</p>
-            </button>
-          </li>
-        ))}
-      </ul>
+              <motion.button
+                className="snippet | flow"
+                data-flow-space="sm"
+                onClick={() => handleOpenModal(snippet)}
+                whileHover={{ scale: 1.01 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <div className="snippet__preview">
+                  <img src={language.icon} alt={language.lang} />
+                </div>
+                <h3 className="snippet__title">{snippet.title}</h3>
+              </motion.button>
+            </motion.li>
+          ))}
+        </AnimatePresence>
+      </motion.ul>
 
-      {isModalOpen && snippet && (
-        <SnippetModal
-          snippet={snippet}
-          handleCloseModal={handleCloseModal}
-          language={language.lang}
-        />
-      )}
+      <AnimatePresence mode="wait">
+        {isModalOpen && snippet && (
+          <SnippetModal
+            snippet={snippet}
+            handleCloseModal={handleCloseModal}
+            language={language.lang}
+          />
+        )}
+      </AnimatePresence>
     </>
   );
 };

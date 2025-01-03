@@ -1,4 +1,5 @@
 import { useSearchParams } from "react-router-dom";
+
 import SnippetList from "../components/SnippetList";
 import Sidebar from "../layouts/Sidebar";
 

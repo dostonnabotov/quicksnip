@@ -1,6 +1,7 @@
-import { SearchIcon } from "./Icons";
 import { useState, useCallback } from "react";
 import { useSearchParams, useNavigate, useLocation } from "react-router-dom";
+
+import { SearchIcon } from "./Icons";
 
 const SearchInput = () => {
   const navigate = useNavigate();
@@ -20,7 +21,6 @@ const SearchInput = () => {
       }
 
       // Set the search params with the query
-      // Use replace: true for keypresses (when isCompletedSearch is false)
       setSearchParams({ q: trimmedQuery }, { replace: !isCompletedSearch });
 
       // Only navigate if we're not already on the search page
