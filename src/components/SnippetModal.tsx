@@ -58,29 +58,31 @@ const SnippetModal: React.FC<Props> = ({
             <CloseIcon />
           </Button>
         </div>
-        <CodePreview language={slugify(language)} code={snippet.code} />
-        <p>
-          <b>Description: </b>
-          {snippet.description}
-        </p>
-        <p>
-          Contributed by{" "}
-          <a
-            href={`https://github.com/${snippet.author}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="styled-link"
-          >
-            @{snippet.author}
-          </a>
-        </p>
-        <ul role="list" className="modal__tags">
-          {snippet.tags.map((tag) => (
-            <li key={tag} className="modal__tag">
-              {tag}
-            </li>
-          ))}
-        </ul>
+        <div className="modal__body | flow">
+          <CodePreview language={slugify(language)} code={snippet.code} />
+          <p>
+            <b>Description: </b>
+            {snippet.description}
+          </p>
+          <p>
+            Contributed by{" "}
+            <a
+              href={`https://github.com/${snippet.author}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="styled-link"
+            >
+              @{snippet.author}
+            </a>
+          </p>
+          <ul role="list" className="modal__tags">
+            {snippet.tags.map((tag) => (
+              <li key={tag} className="modal__tag">
+                {tag}
+              </li>
+            ))}
+          </ul>
+        </div>
       </motion.div>
     </motion.div>,
     modalRoot

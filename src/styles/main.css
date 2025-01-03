@@ -550,22 +550,19 @@ abbr {
   border-radius: var(--br-lg);
   padding: 0.75em;
   text-align: start;
-  filter: grayscale(100%);
 
   &:is(:hover, :focus-visible) {
-    outline: 3px solid var(--clr-border-primary);
-    filter: grayscale(0);
+    outline: 2px solid var(--clr-border-primary);
   }
 }
 
 .snippet__preview {
   width: 100%;
   overflow: hidden;
-  aspect-ratio: 10 / 3;
+  aspect-ratio: 9 / 3;
   background-color: var(--clr-bg-secondary);
   /* background-image: var(--gradient-secondary); */
   border: 1px solid var(--clr-border-primary);
-  border-radius: var(--br-md);
   position: relative;
   padding-inline: 1em;
   display: grid;
@@ -599,19 +596,32 @@ body:has(.modal-overlay) {
 
 .modal {
   background-color: var(--clr-bg-secondary);
-  padding: 2rem;
-  width: 90%;
-  max-width: 800px;
+  width: fit-content;
+  max-width: 1000px;
+  max-height: 90%;
   border-radius: var(--br-lg);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  gap: 0;
   position: relative;
-  gap: 1rem;
+  overflow: auto;
 }
 
 .modal__header {
+  z-index: 50;
   display: flex;
+  position: sticky;
+  top: 0;
   align-items: center;
   justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  background-color: var(--clr-bg-secondary);
+  border-radius: var(--br-lg);
+}
+
+.modal__body {
+  padding: 1.5rem;
+  padding-top: 0;
   gap: 1rem;
 }
 
