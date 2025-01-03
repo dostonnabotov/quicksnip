@@ -9,15 +9,29 @@ type CategoryData = {
   snippets: SnippetType[];
 };
 
+const getSnippetsFromData = (
+  data: CategoryData[] | null,
+  category: string
+): SnippetType[] => {
+  if (!data?.length) {
+    return [];
+  }
+
+  if (category === "All snippets") {
+    return data.flatMap((item) => item.snippets);
+  }
+
+  const categoryData = data.find((item) => item.categoryName === category);
+  return categoryData?.snippets ?? [];
+};
+
 export const useSnippets = () => {
   const { language, category } = useAppContext();
   const { data, loading, error } = useFetch<CategoryData[]>(
     `/consolidated/${slugify(language.lang)}.json`
   );
 
-  const fetchedSnippets = data
-    ? data.find((item) => item.categoryName === category)?.snippets
-    : [];
+  const fetchedSnippets = getSnippetsFromData(data, category);
 
   return { fetchedSnippets, loading, error };
 };

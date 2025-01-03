@@ -25,13 +25,13 @@ Be sure to check out the [CONTRIBUTING.md](/CONTRIBUTING.md) file for detailed g
 
 - **Reporting bugs**
 
-    - If you spot a bug in the codebase or issues with the documentation, please open up a [GitHub issue](https://github.com/dostonnabotov/quicksnip/issues) detailing the problem before creating a PR. 
-    - Once confirmed with maintainers, you can then create a PR.
+  - If you spot a bug in the codebase or issues with the documentation, please open up a [GitHub issue](https://github.com/dostonnabotov/quicksnip/issues) detailing the problem before creating a PR.
+  - Once confirmed with maintainers, you can then create a PR.
 
 - **Proposing new features**
 
-    - If you are interested in proposing new features, please open up a new [GitHub discussion](https://github.com/dostonnabotov/quicksnip/discussions) with details for the proposed feature.
-    - Please do **not** create a PR for a new feature without first discussing it with the maintainers. If you create a PR for a new feature without discussing it first, then your PR will be closed.
+  - If you are interested in proposing new features, please open up a new [GitHub discussion](https://github.com/dostonnabotov/quicksnip/discussions) with details for the proposed feature.
+  - Please do **not** create a PR for a new feature without first discussing it with the maintainers. If you create a PR for a new feature without discussing it first, then your PR will be closed.
 
 ### Adding a Snippet
 
@@ -67,7 +67,7 @@ tags: javascript,date,format
 ---
 
 ```js
-const formatDate = (date) => date.toISOString().split('T')[0];
+const formatDate = (date) => date.toISOString().split("T")[0];
 
 // Usage:
 console.log(formatDate(new Date())); // Output: '2024-12-10'
@@ -78,24 +78,29 @@ Expected file structure:
 
 ```md
 /snippets
-  |- language
-    |- category-name
-      |- your-snippet-here.md
+|- language
+|- category-name
+|- your-snippet-here.md
 ```
 
 > Please do **NOT** add or edit anything in `/public` folder. It will be used for consolidating snippets.
 
 To test that your snippets are formatted correctly use the `snippets:check` script:
+
 ```
 $ npm run snippets:check
 ```
+
 It will return nothing if they are well formatted, otherwise it will tell you what the error is.
 
 ---
+
 To preview the snippets, you need to consolidate them, use the `snippets:consolidate` script:
+
 ```
 $ npm run snippets:consolidate
 ```
+
 It will update the snippets in the `/public` folder, making them available to the frontend.
 
 For more details about adding new categories or programming languages, check out the [CONTRIBUTING.md](/CONTRIBUTING.md) file.
@@ -110,7 +115,7 @@ To keep things smooth and consistent, please:
 
 Following these guidelines helps us (and everyone else) review and merge your contributions faster.
 
-**If you fail to meet the guidelines, your PR will most likely get rejected.** 
+**If you fail to meet the guidelines, your PR will most likely get rejected.**
 
 ## License
 

@@ -3,7 +3,7 @@ name: Checks snippets syntax
 on:
   pull_request:
     paths:
-      - 'snippets/**'
+      - "snippets/**"
 
 jobs:
   check-snippets:

@@ -39,8 +39,8 @@ Closes #
 <!-- If your changes affect visuals, please include screenshots. -->
 
 <details> 
-<summary>Click to view screenshots</summary> 
+<summary>Click to view screenshots</summary>
 
-<!-- Add your screenshots here --> 
+<!-- Add your screenshots here -->
 
 </details>

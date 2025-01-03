@@ -1,24 +1,27 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 
 import { useAppContext } from "@contexts/AppContext";
 import { useSnippets } from "@hooks/useSnippets";
 import { SnippetType } from "@types";
 
-import { LeftAngleArrowIcon } from "./Icons";
 import SnippetModal from "./SnippetModal";
 
-const SnippetList = () => {
+const SnippetList = ({ query }: { query?: string | null }) => {
   const { language, snippet, setSnippet } = useAppContext();
-  const { fetchedSnippets } = useSnippets();
+  const { fetchedSnippets, loading } = useSnippets();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  if (!fetchedSnippets)
-    return (
-      <div>
-        <LeftAngleArrowIcon />
-      </div>
+  const filteredSnippets = useMemo(() => {
+    if (!query) return fetchedSnippets;
+    return fetchedSnippets.filter((snippet) =>
+      snippet.title.toLowerCase().includes(query.toLowerCase())
     );
+  }, [fetchedSnippets, query]);
+
+  if (loading) return <div>Loading...</div>;
+  if (!filteredSnippets || filteredSnippets.length === 0)
+    return <div>No results found for &quot;{query}&quot;</div>;
 
   const handleOpenModal = (activeSnippet: SnippetType) => {
     setIsModalOpen(true);

@@ -35,4 +35,3 @@ No bots are allowed within the QuickSnip community without prior written permiss
 #### Final Notes
 
 This code of conduct is inspired by [FreeCodeCamp’s approach](https://www.freecodecamp.org/news/code-of-conduct), emphasizing clarity and friendliness. Let’s work together to make QuickSnip a supportive and productive space for all developers!
-
