@@ -1,5 +1,41 @@
 [
     {
+        "categoryName": "Advanced Patterns",
+        "snippets": [
+            {
+                "title": "Type-Safe Builder Pattern",
+                "description": "Implements a compile-time type-safe builder pattern using phantom types",
+                "author": "pyyupsk",
+                "tags": [
+                    "rust",
+                    "design-pattern",
+                    "builder",
+                    "type-safe"
+                ],
+                "contributors": [],
+                "code": "use std::marker::PhantomData;\n\n#[derive(Debug)]\npub struct Builder<Name, Age> {\n    name: Option<String>,\n    age: Option<u32>,\n    _name: PhantomData<Name>,\n    _age: PhantomData<Age>,\n}\n\npub struct Missing;\npub struct Set;\n\n#[derive(Debug)]\npub struct Person {\n    name: String,\n    age: u32,\n}\n\nimpl Default for Builder<Missing, Missing> {\n    fn default() -> Self {\n        Self {\n            name: None,\n            age: None,\n            _name: PhantomData,\n            _age: PhantomData,\n        }\n    }\n}\n\nimpl<Age> Builder<Missing, Age> {\n    pub fn name(self, name: impl Into<String>) -> Builder<Set, Age> {\n        Builder {\n            name: Some(name.into()),\n            age: self.age,\n            _name: PhantomData,\n            _age: PhantomData,\n        }\n    }\n}\n\nimpl<Name> Builder<Name, Missing> {\n    pub fn age(self, age: u32) -> Builder<Name, Set> {\n        Builder {\n            name: self.name,\n            age: Some(age),\n            _name: PhantomData,\n            _age: PhantomData,\n        }\n    }\n}\n\nimpl Builder<Set, Set> {\n    pub fn build(self) -> Person {\n        Person {\n            name: self.name.unwrap(),\n            age: self.age.unwrap(),\n        }\n    }\n}\n\n// Usage:\nlet person = Builder::default()\n    .name(\"John\")\n    .age(30)\n    .build();\n"
+            }
+        ]
+    },
+    {
+        "categoryName": "Async Programming",
+        "snippets": [
+            {
+                "title": "Async Rate Limiter",
+                "description": "Implementation of a token bucket rate limiter for async operations",
+                "author": "pyyupsk",
+                "tags": [
+                    "rust",
+                    "async",
+                    "rate-limiter",
+                    "tokio"
+                ],
+                "contributors": [],
+                "code": "use std::sync::Arc;\nuse tokio::sync::Semaphore;\nuse tokio::time::{interval, Duration};\n\npub struct RateLimiter {\n    semaphore: Arc<Semaphore>,\n}\n\nimpl RateLimiter {\n    pub fn new(rate: u32, interval: Duration) -> Self {\n        let semaphore = Arc::new(Semaphore::new(rate as usize));\n        let sem_clone = semaphore.clone();\n\n        tokio::spawn(async move {\n            let mut ticker = interval(interval);\n            loop {\n                ticker.tick().await;\n                sem_clone.add_permits(rate as usize);\n            }\n        });\n\n        RateLimiter { semaphore }\n    }\n\n    pub async fn acquire(&self) -> RateLimit {\n        let permit = self.semaphore.acquire().await.unwrap();\n        RateLimit { _permit: permit }\n    }\n}\n\npub struct RateLimit<'a> {\n    _permit: tokio::sync::SemaphorePermit<'a>,\n}\n\n// Usage:\nasync fn example() {\n    let limiter = RateLimiter::new(10, Duration::from_secs(1));\n\n    for i in 0..20 {\n        let _permit = limiter.acquire().await;\n        println!(\"Executing task {}\", i);\n    }\n}\n"
+            }
+        ]
+    },
+    {
         "categoryName": "Basics",
         "snippets": [
             {
@@ -14,6 +50,24 @@
                 ],
                 "contributors": [],
                 "code": "fn main() { // Defines the main running function\n    println!(\"Hello, World!\"); // Prints Hello, World! to the terminal.\n}\n"
+            }
+        ]
+    },
+    {
+        "categoryName": "Concurrency",
+        "snippets": [
+            {
+                "title": "Thread Pool Implementation",
+                "description": "A simple thread pool implementation for parallel task execution",
+                "author": "pyyupsk",
+                "tags": [
+                    "rust",
+                    "concurrency",
+                    "thread-pool",
+                    "parallel"
+                ],
+                "contributors": [],
+                "code": "use std::sync::{mpsc, Arc, Mutex};\nuse std::thread;\n\ntype Job = Box<dyn FnOnce() + Send + 'static>;\n\npub struct ThreadPool {\n    workers: Vec<Worker>,\n    sender: Option<mpsc::Sender<Job>>,\n}\n\nstruct Worker {\n    id: usize,\n    thread: Option<thread::JoinHandle<()>>,\n}\n\nimpl ThreadPool {\n    pub fn new(size: usize) -> ThreadPool {\n        assert!(size > 0);\n\n        let (sender, receiver) = mpsc::channel();\n        let receiver = Arc::new(Mutex::new(receiver));\n        let mut workers = Vec::with_capacity(size);\n\n        for id in 0..size {\n            workers.push(Worker::new(id, Arc::clone(&receiver)));\n        }\n\n        ThreadPool {\n            workers,\n            sender: Some(sender),\n        }\n    }\n\n    pub fn execute<F>(&self, f: F)\n    where\n        F: FnOnce() + Send + 'static,\n    {\n        let job = Box::new(f);\n        self.sender.as_ref().unwrap().send(job).unwrap();\n    }\n}\n\nimpl Worker {\n    fn new(id: usize, receiver: Arc<Mutex<mpsc::Receiver<Job>>>) -> Worker {\n        let thread = thread::spawn(move || loop {\n            let message = receiver.lock().unwrap().recv();\n\n            match message {\n                Ok(job) => {\n                    println!(\"Worker {id} got a job; executing.\");\n                    job();\n                }\n                Err(_) => {\n                    println!(\"Worker {id} disconnected; shutting down.\");\n                    break;\n                }\n            }\n        });\n\n        Worker {\n            id,\n            thread: Some(thread),\n        }\n    }\n}\n\nimpl Drop for ThreadPool {\n    fn drop(&mut self) {\n        drop(self.sender.take());\n\n        for worker in &mut self.workers {\n            if let Some(thread) = worker.thread.take() {\n                thread.join().unwrap();\n            }\n        }\n    }\n}\n"
             }
         ]
     },
@@ -48,6 +102,24 @@
         ]
     },
     {
+        "categoryName": "Memory Management",
+        "snippets": [
+            {
+                "title": "Custom Smart Pointer",
+                "description": "Implementation of a custom reference-counted smart pointer with interior mutability",
+                "author": "pyyupsk",
+                "tags": [
+                    "rust",
+                    "smart-pointer",
+                    "memory-management",
+                    "unsafe"
+                ],
+                "contributors": [],
+                "code": "use std::cell::UnsafeCell;\nuse std::ops::{Deref, DerefMut};\nuse std::sync::atomic::{AtomicUsize, Ordering};\nuse std::sync::Arc;\n\npub struct Interior<T> {\n    ref_count: AtomicUsize,\n    data: UnsafeCell<T>,\n}\n\npub struct SmartPtr<T> {\n    ptr: Arc<Interior<T>>,\n}\n\nimpl<T> SmartPtr<T> {\n    pub fn new(data: T) -> Self {\n        SmartPtr {\n            ptr: Arc::new(Interior {\n                ref_count: AtomicUsize::new(1),\n                data: UnsafeCell::new(data),\n            }),\n        }\n    }\n\n    pub fn get_ref_count(&self) -> usize {\n        self.ptr.ref_count.load(Ordering::SeqCst)\n    }\n}\n\nimpl<T> Clone for SmartPtr<T> {\n    fn clone(&self) -> Self {\n        self.ptr.ref_count.fetch_add(1, Ordering::SeqCst);\n        SmartPtr {\n            ptr: Arc::clone(&self.ptr),\n        }\n    }\n}\n\nimpl<T> Drop for SmartPtr<T> {\n    fn drop(&mut self) {\n        if self.ptr.ref_count.fetch_sub(1, Ordering::SeqCst) == 1 {\n            // Last reference is being dropped\n            unsafe {\n                drop(Box::from_raw(self.ptr.data.get()));\n            }\n        }\n    }\n}\n\nimpl<T> Deref for SmartPtr<T> {\n    type Target = T;\n\n    fn deref(&self) -> &Self::Target {\n        unsafe { &*self.ptr.data.get() }\n    }\n}\n\nimpl<T> DerefMut for SmartPtr<T> {\n    fn deref_mut(&mut self) -> &mut Self::Target {\n        unsafe { &mut *self.ptr.data.get() }\n    }\n}\n\n// Usage:\nlet ptr = SmartPtr::new(42);\nlet cloned = ptr.clone();\nassert_eq!(ptr.get_ref_count(), 2);\nassert_eq!(*ptr, 42);\n"
+            }
+        ]
+    },
+    {
         "categoryName": "String Manipulation",
         "snippets": [
             {
@@ -62,6 +134,19 @@
                 ],
                 "contributors": [],
                 "code": "fn capitalized(str: &str) -> String {\n    let mut chars = str.chars();\n    match chars.next() {\n        None => String::new(),\n        Some(f) => f.to_uppercase().chain(chars).collect(),\n    }\n}\n\n// Usage:\nassert_eq!(capitalized(\"lower_case\"), \"Lower_case\")\n"
+            },
+            {
+                "title": "String to Vec<char>",
+                "description": "Convert a String into a vector of characters",
+                "author": "pyyupsk",
+                "tags": [
+                    "rust",
+                    "string",
+                    "vector",
+                    "chars"
+                ],
+                "contributors": [],
+                "code": "fn string_to_chars(s: &str) -> Vec<char> {\n    s.chars().collect()\n}\n\n// Usage:\nlet chars = string_to_chars(\"Hello\"); // ['H', 'e', 'l', 'l', 'o']\n"
             }
         ]
     }
