@@ -1,6 +1,6 @@
 [
     {
-        "categoryName": "Animations",
+        "name": "Animations",
         "snippets": [
             {
                 "title": "Fade In Animation",
@@ -29,7 +29,7 @@
         ]
     },
     {
-        "categoryName": "Borders Shadows",
+        "name": "Borders Shadows",
         "snippets": [
             {
                 "title": "Border Radius Helper",
@@ -58,7 +58,7 @@
         ]
     },
     {
-        "categoryName": "Components",
+        "name": "Components",
         "snippets": [
             {
                 "title": "Primary Button",
@@ -75,7 +75,7 @@
         ]
     },
     {
-        "categoryName": "Layouts",
+        "name": "Layouts",
         "snippets": [
             {
                 "title": "Aspect Ratio",
@@ -130,7 +130,7 @@
         ]
     },
     {
-        "categoryName": "Typography",
+        "name": "Typography",
         "snippets": [
             {
                 "title": "Font Import Helper",
@@ -184,7 +184,7 @@
         ]
     },
     {
-        "categoryName": "Utilities",
+        "name": "Utilities",
         "snippets": [
             {
                 "title": "Clearfix",

@@ -1,6 +1,6 @@
 [
     {
-        "categoryName": "Basics",
+        "name": "Basics",
         "snippets": [
             {
                 "title": "Hello, World!",
@@ -16,7 +16,7 @@
         ]
     },
     {
-        "categoryName": "Mathematical Functions",
+        "name": "Mathematical Functions",
         "snippets": [
             {
                 "title": "Factorial Function",

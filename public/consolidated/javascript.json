@@ -1,6 +1,6 @@
 [
     {
-        "categoryName": "Array Manipulation",
+        "name": "Array Manipulation",
         "snippets": [
             {
                 "title": "Partition Array",
@@ -62,7 +62,7 @@
         ]
     },
     {
-        "categoryName": "Basics",
+        "name": "Basics",
         "snippets": [
             {
                 "title": "Hello, World!",
@@ -78,7 +78,7 @@
         ]
     },
     {
-        "categoryName": "Date And Time",
+        "name": "Date And Time",
         "snippets": [
             {
                 "title": "Check Leap Year",
@@ -175,7 +175,7 @@
         ]
     },
     {
-        "categoryName": "Dom Manipulation",
+        "name": "Dom Manipulation",
         "snippets": [
             {
                 "title": "Change Element Style",
@@ -202,7 +202,7 @@
         ]
     },
     {
-        "categoryName": "Function Utilities",
+        "name": "Function Utilities",
         "snippets": [
             {
                 "title": "Compose Functions",
@@ -311,7 +311,7 @@
         ]
     },
     {
-        "categoryName": "Local Storage",
+        "name": "Local Storage",
         "snippets": [
             {
                 "title": "Add Item to localStorage",
@@ -349,7 +349,7 @@
         ]
     },
     {
-        "categoryName": "Number Formatting",
+        "name": "Number Formatting",
         "snippets": [
             {
                 "title": "Convert Number to Currency",
@@ -420,7 +420,7 @@
         ]
     },
     {
-        "categoryName": "Object Manipulation",
+        "name": "Object Manipulation",
         "snippets": [
             {
                 "title": "Check if Object is Empty",
@@ -574,7 +574,7 @@
         ]
     },
     {
-        "categoryName": "String Manipulation",
+        "name": "String Manipulation",
         "snippets": [
             {
                 "title": "Capitalize String",

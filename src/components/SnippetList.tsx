@@ -63,7 +63,7 @@ const SnippetList = () => {
                 whileTap={{ scale: 0.98 }}
               >
                 <div className="snippet__preview">
-                  <img src={language.icon} alt={language.lang} />
+                  <img src={language.icon} alt={language.name} />
                 </div>
                 <h3 className="snippet__title">{snippet.title}</h3>
               </motion.button>
@@ -77,7 +77,7 @@ const SnippetList = () => {
           <SnippetModal
             snippet={snippet}
             handleCloseModal={handleCloseModal}
-            language={language.lang}
+            language={language.name}
           />
         )}
       </AnimatePresence>
