@@ -1,12 +1,12 @@
 import { fixupPluginRules } from "@eslint/compat";
 import { FlatCompat } from "@eslint/eslintrc";
 import js from "@eslint/js";
-import globals from "globals";
+import prettier from "eslint-plugin-prettier/recommended";
 import reactPlugin from "eslint-plugin-react";
 import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
+import globals from "globals";
 import tseslint from "typescript-eslint";
-import prettier from "eslint-plugin-prettier/recommended";
 
 const project = "./tsconfig.app.json";
 // eslint flat structure backwards compatibility
@@ -23,7 +23,7 @@ function legacyPlugin(name, alias = name) {
 }
 
 export default tseslint.config(
-  { ignores: ["node_modules", "dist", "build"] },
+  { ignores: ["node_modules", "dist", "coverage"] },
   {
     extends: [
       js.configs.recommended,
@@ -32,7 +32,7 @@ export default tseslint.config(
       ...compat.extends("plugin:import/typescript"),
       reactPlugin.configs.flat.recommended,
     ],
-    files: ["**/*.{ts,tsx}"],
+    files: ["**/*.{js,ts,tsx}"],
     languageOptions: {
       ecmaVersion: 2020,
       globals: globals.browser,

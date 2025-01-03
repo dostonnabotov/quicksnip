@@ -11,6 +11,7 @@
   "ignorePaths": [
     "node_modules",
     "dist",
+    "coverage",
     "public"
   ]
 }

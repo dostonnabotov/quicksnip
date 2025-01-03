@@ -12,8 +12,10 @@
     "preview": "vite preview",
     "prepare": "husky",
     "cspell": "cspell --config cspell.json \"**/*.{ts,tsx,js,jsx,json,html}\"",
-    "snippets:check": "node ./utils/checkSnippetFormatting.js",
-    "snippets:consolidate": "node ./utils/consolidateSnippets.js"
+    "snippets:check": "tsx ./utils/checkSnippetFormatting.ts",
+    "snippets:consolidate": "tsx ./utils/consolidateSnippets.ts",
+    "test": "vitest --coverage",
+    "test-ci": "vitest run"
   },
   "dependencies": {
     "framer-motion": "^11.15.0",
@@ -28,10 +30,12 @@
     "@eslint/eslintrc": "^3.2.0",
     "@eslint/js": "^9.11.1",
     "@types/eslint-plugin-react-refresh": "^0.4.0",
+    "@types/node": "^22.10.5",
     "@types/react": "^18.3.10",
     "@types/react-dom": "^18.3.0",
     "@types/react-syntax-highlighter": "^15.5.13",
     "@vitejs/plugin-react-swc": "^3.5.0",
+    "@vitest/coverage-v8": "^2.1.8",
     "cspell": "^8.17.1",
     "eslint": "^9.11.1",
     "eslint-config-prettier": "^9.1.0",
@@ -44,9 +48,11 @@
     "globals": "^15.9.0",
     "husky": "^9.1.7",
     "prettier": "^3.4.2",
+    "tsx": "^4.19.2",
     "typescript": "^5.5.3",
     "typescript-eslint": "^8.7.0",
     "vite": "^5.4.8",
-    "vite-tsconfig-paths": "^5.1.4"
+    "vite-tsconfig-paths": "^5.1.4",
+    "vitest": "^2.1.8"
   }
 }
