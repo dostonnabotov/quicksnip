@@ -36,6 +36,10 @@
         "icon": "/icons/python.svg"
     },
     {
+        "lang": "RUBY",
+        "icon": "/icons/ruby.svg"
+    },
+    {
         "lang": "RUST",
         "icon": "/icons/rust.svg"
     },
