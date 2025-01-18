@@ -1,16 +1,23 @@
+/**
+ * Inspired by https://blog.logrocket.com/creating-custom-select-dropdown-css/
+ */
+
 import { useRef, useEffect, useState, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { useAppContext } from "@contexts/AppContext";
 import { useKeyboardNavigation } from "@hooks/useKeyboardNavigation";
 import { useLanguages } from "@hooks/useLanguages";
 import { LanguageType } from "@types";
+import { configureUserSelection } from "@utils/configureUserSelection";
+import { slugify } from "@utils/slugify";
 
 import SubLanguageSelector from "./SubLanguageSelector";
 
-// Inspired by https://blog.logrocket.com/creating-custom-select-dropdown-css/
-
 const LanguageSelector = () => {
-  const { language, setLanguage } = useAppContext();
+  const navigate = useNavigate();
+
+  const { language, setSearchText } = useAppContext();
   const { fetchedLanguages, loading, error } = useLanguages();
   const allLanguages = useMemo(
     () =>
@@ -33,8 +40,19 @@ const LanguageSelector = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [openedLanguages, setOpenedLanguages] = useState<LanguageType[]>([]);
 
-  const handleSelect = (selected: LanguageType) => {
-    setLanguage(selected);
+  /**
+   * When setting a new language we need to ensure that a category
+   * has been set given this new language.
+   * Ensure that the search text is cleared.
+   */
+  const handleSelect = async (selected: LanguageType) => {
+    const { language: newLanguage, category: newCategory } =
+      await configureUserSelection({
+        languageName: selected.name,
+      });
+
+    setSearchText("");
+    navigate(`/${slugify(newLanguage.name)}/${slugify(newCategory)}`);
     setIsOpen(false);
     setOpenedLanguages([]);
   };
@@ -104,8 +122,13 @@ const LanguageSelector = () => {
     }
   }, [isOpen, focusedIndex]);
 
-  if (loading) return <p>Loading languages...</p>;
-  if (error) return <p>Error fetching languages: {error}</p>;
+  if (loading) {
+    return <p>Loading languages...</p>;
+  }
+
+  if (error) {
+    return <p>Error fetching languages: {error}</p>;
+  }
 
   return (
     <div

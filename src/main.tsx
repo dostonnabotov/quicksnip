@@ -2,15 +2,14 @@ import "@styles/main.css";
 
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
+import { BrowserRouter } from "react-router-dom";
 
-import { AppProvider } from "@contexts/AppContext";
-
-import App from "./App";
+import AppRouter from "@AppRouter";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <AppProvider>
-      <App />
-    </AppProvider>
+    <BrowserRouter>
+      <AppRouter />
+    </BrowserRouter>
   </StrictMode>
 );
