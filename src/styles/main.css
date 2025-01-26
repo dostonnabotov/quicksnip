@@ -220,6 +220,10 @@ abbr {
   --_flow-space: 2rem;
 }
 
+.flow:has(.data-empty) {
+  height: 100%;
+}
+
 /* Text */
 .main-title {
   font-size: var(--fs-800);
@@ -565,7 +569,7 @@ abbr {
  * 1. Responsive grid that adjusts columns automatically
  *    Each item has a minimum width of 17.5rem and maximum of 100%
  */
-.snippets {
+.snippets:not(.data-empty) {
   display: grid;
   gap: 1.5rem;
   grid-template-columns: repeat(
@@ -604,6 +608,13 @@ abbr {
   color: var(--clr-text-secondary);
 }
 
+.category-no-snippets-found {
+  text-align: center;
+  font-size: var(--fs-500);
+  color: var(--clr-text-primary);
+  padding: 1rem;
+  height: 100%;
+}
 /*------------------------------------*\
   #MODAL
 \*------------------------------------*/

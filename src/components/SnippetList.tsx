@@ -5,22 +5,16 @@ import { useAppContext } from "@contexts/AppContext";
 import { useSnippets } from "@hooks/useSnippets";
 import { SnippetType } from "@types";
 
-import { LeftAngleArrowIcon } from "./Icons";
 import SnippetModal from "./SnippetModal";
 
 const SnippetList = () => {
   const { language, snippet, setSnippet } = useAppContext();
-  const { fetchedSnippets } = useSnippets();
+  const { fetchedSnippets, loading } = useSnippets();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const shouldReduceMotion = useReducedMotion();
 
-  if (!fetchedSnippets)
-    return (
-      <div>
-        <LeftAngleArrowIcon />
-      </div>
-    );
+  if (loading) return null;
 
   const handleOpenModal = (activeSnippet: SnippetType) => {
     setIsModalOpen(true);
@@ -34,9 +28,25 @@ const SnippetList = () => {
 
   return (
     <>
-      <motion.ul role="list" className="snippets">
+      <motion.ul
+        role="list"
+        className={`snippets ${fetchedSnippets && fetchedSnippets.length === 0 ? "data-empty" : ""}`}
+      >
         <AnimatePresence mode="popLayout">
-          {fetchedSnippets.map((snippet, idx) => {
+          {fetchedSnippets && fetchedSnippets.length === 0 && (
+            <div className="category-no-snippets-found">
+              <p>No snippets found for this category. Why not add one? 🚀</p>
+              <a
+                href="https://github.com/dostonnabotov/quicksnip/blob/main/CONTRIBUTING.md"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="styled-link"
+              >
+                Add your own snippet
+              </a>
+            </div>
+          )}
+          {fetchedSnippets?.map((snippet, idx) => {
             const uniqueId = `${language.name}-${snippet.title}`;
             return (
               <motion.li
